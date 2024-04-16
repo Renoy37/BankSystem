@@ -1,24 +1,48 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from "react";
+import Signup from './components/Login/Signup';
 
 function App() {
+  const [signupData, setSignupData] = useState([]);
+  const [loginData, setLoginData] = useState([])
+
+
+  function handleLogin(loginDetails) {
+    fetch(' "https//awating/api/com"', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginDetails),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Login Successful:', data);
+        setLoginData([...loginData, loginDetails]);
+      })
+      .catch((error) => console.error('Error:', error));
+  }
+
+  function handleSignUp(signUpDetails) {
+    fetch(' "https//awating/api/com"', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signUpDetails),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Login Successful:', data);
+        setSignupData([...signupData, signUpDetails]);
+      })
+      .catch((error) => console.error('Error:', error));
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Signup onSignUp={handleSignUp} onLogin={handleLogin}/>
+    </>
   );
 }
 
