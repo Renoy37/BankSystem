@@ -1,5 +1,3 @@
-// Footer.js
-
 import React from 'react';
 
 function Footer() {
@@ -21,7 +19,7 @@ function Footer() {
         </div>
         <div className="footer-column">
           <h4>Contact Us</h4>
-          <p>Email: info@yourbank.com</p>
+          <p>Email: example@example.com</p>
           <p>Phone: 123-456-7890</p>
           <p>Address: 123 Main Street, City, Country</p>
         </div>

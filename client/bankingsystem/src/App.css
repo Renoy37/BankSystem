@@ -51,6 +51,8 @@
   background-color: darkblue;
 }
 
+/* menu component styles */
+
 .menu-container {
   width: 300px;
   margin: 50px auto;
@@ -73,7 +75,7 @@
   margin-bottom: 10px;
   cursor: pointer;
   background-color: #ccc;
-  height: 50px;
+  height: 70px;
   transition: background-color 0.3s ease;
 }
 
@@ -100,6 +102,8 @@
 .submenu-item:hover {
   background-color: #e0e0e0;
 }
+
+/*  */
 
 
 /* Transaction page styles */
@@ -243,6 +247,7 @@ label {
   position: fixed;
   bottom: -31px;
   width: 100%;
+  cursor: default;
 }
 
 .footer-content {
