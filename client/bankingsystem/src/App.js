@@ -6,6 +6,7 @@ import Signup from './components/Login/Signup';
 import Menu from './components/Menu';
 import Transactions from './components/Transactions';
 import Details from './components/Details';
+import Footer from './components/Footer';
 
 function App() {
   const [signupData, setSignupData] = useState([]);
@@ -34,6 +35,7 @@ function App() {
       })
       .catch((error) => console.error('Error:', error));
       setAuthenticated(true);
+      localStorage.setItem('authenticated', 'true');
   }
 
   function handleSignUp(signUpDetails) {
@@ -51,7 +53,13 @@ function App() {
       })
       .catch((error) => console.error('Error:', error));
       setAuthenticated(true);
+      localStorage.setItem('authenticated', 'true');
 
+  }
+
+  function handleLogout () {
+    setAuthenticated(false);
+    localStorage.removeItem('authenticated');
   }
 
   return (
@@ -64,6 +72,7 @@ function App() {
           <Route path="/details" element={authenticated ? <Details /> : <Navigate to="/" />} />
           <Route path="/" element={!authenticated ? <Signup onSignUp={handleSignUp} onLogin={handleLogin} /> : <Navigate to="/menu" />} />
         </Routes>
+        {authenticated && <Footer />}
       </div>
     </Router>
   );
