@@ -67,7 +67,7 @@ class Admin(db.Model, SerializerMixin):
     name = db.Column(db.String(100))
     role = db.Column(db.String(50))
 
-class Transaction(db.Model):
+class Transaction(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text)
@@ -76,6 +76,9 @@ class Transaction(db.Model):
 
     # Many-to-one relationship with User
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Many transactions belong to one user
+    
+    # Defining serialization rules
+    serialize_rules = ('id', 'amount', 'description', 'date', 'user_id')
 
 class Account(db.Model, SerializerMixin):
     __tablename__ = 'accounts'

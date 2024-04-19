@@ -22,12 +22,42 @@ app.config['SECRET_KEY'] = 'ne5by5vrhg5v7u7r'
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(hours=1) 
 app.json.compact = False
 
-jwt = JWTManager(app)
+
+db.init_app(app)
 migrate = Migrate(app, db)
+
+jwt = JWTManager(app)
+
 CORS(app) 
 
 
-db.init_app(app)
+# # route to get all transactions
+# @app.route('/transactions', methods=['GET'])
+# def get_transactions():
+#     # Query the database to retrieve all transactions
+#     transactions = Transaction.query.all()
+
+#     # Serialize the transactions data into dictionaries
+#     transaction_list = [transaction.to_dict() for transaction in transactions]
+
+#     # Return the JSON response
+#     return jsonify({'transactions': transaction_list}), 200
+
+@app.route('/transactions', methods=['GET'])
+def get_transactions():
+    transactions = Transaction.query.all()
+
+    transaction_list = []
+    for transaction in transactions:
+        transaction_list.append({
+            'id': transaction.id,
+            'amount': transaction.amount,
+            'description': transaction.description,
+            'date': transaction.date.strftime('%Y-%m-%d %H:%M:%S'),  
+            'user_id': transaction.user_id
+        })
+
+    return jsonify({'transactions': transaction_list}), 200
 
 
 @app.route('/signup', methods=['POST'])
