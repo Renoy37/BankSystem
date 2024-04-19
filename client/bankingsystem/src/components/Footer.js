@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className={footerStyle}>
       <div className="footer-content">
         <div className="footer-column">
           <h4>About Us</h4>
@@ -30,5 +30,7 @@ function Footer() {
     </footer>
   );
 }
+
+
 
 export default Footer;
