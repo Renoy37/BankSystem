@@ -79,8 +79,8 @@ function Menu() {
         </div>
       )}
 
-      <footer onClick={handleDismissPopup}>Footer</footer> {/* Dismiss popup on click */}
-      <nav onClick={handleDismissPopup}>Navbar</nav> {/* Dismiss popup on click */}
+      <footer onClick={handleDismissPopup}></footer> {/* Dismiss popup on click */}
+      <nav onClick={handleDismissPopup}></nav> {/* Dismiss popup on click */}
     </div>
   );
 }

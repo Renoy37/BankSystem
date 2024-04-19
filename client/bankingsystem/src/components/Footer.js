@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className={footerStyle}>
       <div className="footer-content">
         <div className="footer-column">
           <h4>About Us</h4>
@@ -30,5 +30,13 @@ function Footer() {
     </footer>
   );
 }
+
+const footerStyle = {
+  height: 'calc(85%)', // This will reduce the footer height by 5%
+  position: 'fixed',
+  bottom: 0,
+  width: '100%'
+}
+
 
 export default Footer;
