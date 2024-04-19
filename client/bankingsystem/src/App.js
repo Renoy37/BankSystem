@@ -57,24 +57,27 @@ function App() {
 
   }
 
-  function handleLogout () {
-    setAuthenticated(false);
-    localStorage.removeItem('authenticated');
-  }
+  // function handleLogout () {
+  //   setAuthenticated(false);
+  //   localStorage.removeItem('authenticated');
+  // }
 
   return (
     <Router>
       <div className="App">
-        {authenticated && <Navbar />} 
+      {authenticated && <Navbar />}
+      {/* {authenticated ? "": <Navbar />}  */}
         <Routes>
+          <Route path="/" element={<Signup onSignUp={handleSignUp} onLogin={handleLogin} />} />
           <Route path="/menu" element={authenticated ? <Menu /> : <Navigate to="/" />} />
           <Route path="/transactions" element={authenticated ? <Transactions /> : <Navigate to="/" />} />
           <Route path="/details" element={authenticated ? <Details /> : <Navigate to="/" />} />
-          <Route path="/" element={!authenticated ? <Signup onSignUp={handleSignUp} onLogin={handleLogin} /> : <Navigate to="/menu" />} />
         </Routes>
+        {/* {authenticated ? "": <Footer />} */}
         {authenticated && <Footer />}
       </div>
     </Router>
+
   );
 }
 

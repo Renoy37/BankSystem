@@ -30,8 +30,6 @@ CORS(app)
 db.init_app(app)
 
 
-
-
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -56,6 +54,7 @@ def signup():
 
 
 
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -76,7 +75,6 @@ def login():
     access_token = create_access_token(identity=user.id)
 
     return jsonify({'message': 'Logged in successfully', 'access_token' : access_token}), 200
-
 
 
 

@@ -1,22 +1,40 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 function Menu() {
   return (
-    <div>
+    <div className='menu_contain'>
       <h1>Menu</h1>
       <ul className="menu-list">
         <li className="menu-item">
           Account Overview
           <ul className="submenu">
-            <li className="submenu-item">View Profile</li>
-            <li className="submenu-item">Edit Profile</li>
+            <li className="submenu-item">
+            <Link to="/details" className='hover-links'>
+             View Profile
+            </Link>
+            </li>
+            <li className="submenu-item">
+            <Link to="/details" className='hover-links'>
+             Edit Profile
+            </Link>
+            </li>
           </ul>
         </li>
         <li className="menu-item">
           Check Balance
           <ul className="submenu">
-            <li className="submenu-item">Savings Account</li>
-            <li className="submenu-item">Checking Account</li>
+            <li className="submenu-item">
+            <Link to="/details" className='hover-links'>
+             Savings Account
+            </Link>
+            </li>
+            <li className="submenu-item">
+            <Link to="/details" className='hover-links'>
+              Checking Account
+            </Link>
+            </li>
           </ul>
         </li>
         <li className="menu-item">

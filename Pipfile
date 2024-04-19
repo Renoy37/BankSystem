@@ -10,6 +10,10 @@ Flask-Migrate = "*"
 Flask-SQLAlchemy = "*"
 flask-restful = "*"
 sqlalchemy-serializer = "*"
+werkzeug = "*"
+Flask-JWT-Extended = "*"
+Flask-Cors = "*"
+
 
 [requires]
 python_full_version = "3.8.13"
