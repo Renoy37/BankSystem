@@ -4,7 +4,7 @@ from flask import Flask, request, make_response, session, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required, get_jwt_identity, JWTManager
+from flask_jwt_extended import jwt_required, get_jwt_identity, JWTManager, current_user
 from models import db, User,  Admin, Account, Transaction, generate_password_hash, check_password_hash
 from datetime import timedelta
 from flask_cors import CORS 
@@ -30,22 +30,38 @@ jwt = JWTManager(app)
 CORS(app) 
 
 
-@app.route('/transactions', methods=['GET'])
-@jwt_required()  
-def get_transactions():
-    transactions = Transaction.query.all()
 
-    transaction_list = []
-    for transaction in transactions:
-        transaction_list.append({
-            'id': transaction.id,
-            'amount': transaction.amount,
-            'description': transaction.description,
-            'date': transaction.date.strftime('%Y-%m-%d %H:%M:%S'),  
-            'user_id': transaction.user_id
-        })
 
-    return jsonify({'transactions': transaction_list}), 200
+
+@app.route('/transaction_details', methods=['GET'])
+@jwt_required()
+def get_transaction_details():
+    user_id = get_jwt_identity()
+
+    user_transactions = Transaction.query.filter_by(user_id=user_id).all()
+
+    transactions_data = [transaction.to_dict() for transaction in user_transactions]
+
+    return jsonify({'transactions': transactions_data}), 200
+
+
+# route to delete transactions
+@app.route('/transaction/<int:transaction_id>', methods=['DELETE'])
+@jwt_required()
+def delete_transaction(transaction_id):
+    user_id = get_jwt_identity()
+
+    transaction = Transaction.query.filter_by(id=transaction_id, user_id=user_id).first()
+
+    if not transaction:
+        return jsonify({'error': 'Transaction not found or does not belong to the user'}), 404
+
+    db.session.delete(transaction)
+    db.session.commit()
+
+    return jsonify({'message': 'Transaction deleted successfully'}), 200
+
+
 
 # route to get user delatils
 @app.route('/user_details', methods=['GET'])
@@ -60,27 +76,33 @@ def get_user_details():
         return jsonify(user_dict), 200
     else:
         return jsonify({'error': 'User not found'}), 404
+    
 
 # route to get the account deails
 @app.route('/account_details', methods=['GET'])
-@jwt_required()  
+@jwt_required()
 def get_account_details():
     user_id = get_jwt_identity()
-    
-    savings_account = Account.query.filter_by(type='Savings', user_id=user_id).first()
-    checking_account = Account.query.filter_by(type='Checking', user_id=user_id).first()
 
-    if savings_account and checking_account:
-        savings_data = savings_account.to_dict(rules=('type', 'balance', 'account_number'))
-        checking_data = checking_account.to_dict(rules=('type', 'balance', 'account_number'))
+    user = User.query.get(user_id)
+
+    if user:
+        accounts = Account.query.filter_by(user_id=user.id).all()
         
-        response_data = {
-            'Savings Account': savings_data,
-            'Checking Account': checking_data
-        }
-        return jsonify(response_data), 200
+        account_list = []
+        for account in accounts:
+            account_list.append({
+                'id': account.id,
+                'type': account.type,
+                'balance': account.balance,
+                'account_number': account.account_number,
+                'user_id': account.user_id
+            })
+
+        return jsonify({'accounts': account_list}), 200
     else:
-        return jsonify({'error': 'One or both accounts not found'}), 404
+        return jsonify({'error': 'User not found'}), 404
+ 
 
 @app.route('/signup', methods=['POST'])
 def signup():

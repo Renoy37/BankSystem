@@ -21,25 +21,33 @@ function App() {
   }, []);
 
   function handleLogin(loginDetails) {
-    fetch('https://awating/api/com', { 
+    fetch('http://127.0.0.1:5555/login', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(loginDetails),
     })
-      .then((response) => response.json())
+
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Login failed');
+        }
+        return response.json();
+      })
+
       .then((data) => {
         console.log('Login Successful:', data);
-        setLoginData([...loginData, loginDetails]);
+        const { access_token } = data;
+        localStorage.setItem('access_token', access_token);
+        setAuthenticated(true);
       })
       .catch((error) => console.error('Error:', error));
-      setAuthenticated(true);
-      localStorage.setItem('authenticated', 'true');
   }
+  
 
   function handleSignUp(signUpDetails) {
-    fetch('https://awating/api/com', { 
+    fetch('http://127.0.0.1:5555/signup', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,15 +73,15 @@ function App() {
   return (
     <Router>
       <div className="App">
-      {authenticated && <Navbar />}
-      {/* {authenticated ? "": <Navbar />}  */}
+        {authenticated && <Navbar />}
         <Routes>
-          <Route path="/" element={<Signup onSignUp={handleSignUp} onLogin={handleLogin} />} />
+          {/* If the user is not authenticated, render the signup component */}
+          {!authenticated && <Route path="/" element={<Signup onSignUp={handleSignUp} onLogin={handleLogin} />} />}
+          {/* If the user is authenticated, render the rest of the pages */}
           <Route path="/menu" element={authenticated ? <Menu /> : <Navigate to="/" />} />
           <Route path="/transactions" element={authenticated ? <Transactions /> : <Navigate to="/" />} />
           <Route path="/details" element={authenticated ? <Details /> : <Navigate to="/" />} />
         </Routes>
-        {/* {authenticated ? "": <Footer />} */}
         {authenticated && <Footer />}
       </div>
     </Router>

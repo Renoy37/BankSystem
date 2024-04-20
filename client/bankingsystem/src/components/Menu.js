@@ -7,46 +7,46 @@ function Menu() {
   return (
     <div className='menu-section'>
 
-    <div class="card-container">
-        <div class="card">
-            <div class="card-content">
-                <h2 class="card-title">Bank and Save</h2>
-                <p class="card-description">Explore our banking services, including savings accounts, checking accounts, and online banking features.</p>
+    <div className="card-container">
+        <div className="card">
+            <div className="card-content">
+                <h2 className="card-title">Bank and Save</h2>
+                <p className="card-description">Explore our banking services, including savings accounts, checking accounts, and online banking features.</p>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-content">
-                <h2 class="card-title">Home and Loans</h2>
-                <p class="card-description">Discover our home loan options, mortgage products, and tips for managing your home finances effectively.</p>
+        <div className="card">
+            <div className="card-content">
+                <h2 className="card-title">Home and Loans</h2>
+                <p className="card-description">Discover our home loan options, mortgage products, and tips for managing your home finances effectively.</p>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-content">
-                <h2 class="card-title">Credit Cards</h2>
-                <p class="card-description">Learn about our credit card offerings, rewards programs, interest rates, and responsible credit card usage tips.</p>
+        <div className="card">
+            <div className="card-content">
+                <h2 className="card-title">Credit Cards</h2>
+                <p className="card-description">Learn about our credit card offerings, rewards programs, interest rates, and responsible credit card usage tips.</p>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-content">
-                <h2 class="card-title">Personal Loans</h2>
-                <p class="card-description">Find out about our personal loan options, application process, eligibility criteria, and repayment terms.</p>
+        <div className="card">
+            <div className="card-content">
+                <h2 className="card-title">Personal Loans</h2>
+                <p className="card-description">Find out about our personal loan options, application process, eligibility criteria, and repayment terms.</p>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-content">
-                <h2 class="card-title">Share Investments</h2>
-                <p class="card-description">Explore investment opportunities in stocks, mutual funds, ETFs, and learn about investment strategies.</p>
+        <div className="card">
+            <div className="card-content">
+                <h2 className="card-title">Share Investments</h2>
+                <p className="card-description">Explore investment opportunities in stocks, mutual funds, ETFs, and learn about investment strategies.</p>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-content">
-                <h2 class="card-title">More</h2>
-                <p class="card-description">Discover additional financial services and resources, including budgeting tools, retirement planning, and insurance products.</p>
+        <div className="card">
+            <div className="card-content">
+                <h2 className="card-title">More</h2>
+                <p className="card-description">Discover additional financial services and resources, including budgeting tools, retirement planning, and insurance products.</p>
             </div>
         </div>
     </div>
