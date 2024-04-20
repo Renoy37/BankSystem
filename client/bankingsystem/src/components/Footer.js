@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className={footerStyle}>
+    <footer className= 'footerStyle'>
       <div className="footer-content">
         <div className="footer-column">
           <h4>About Us</h4>

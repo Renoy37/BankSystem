@@ -3,10 +3,9 @@
 from flask import Flask, request, make_response, session, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from flask_jwt_extended import JWTManager
 from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required
-from models import db, User,  Admin, Transaction, generate_password_hash, check_password_hash
+from flask_jwt_extended import jwt_required, get_jwt_identity, JWTManager
+from models import db, User,  Admin, Account, Transaction, generate_password_hash, check_password_hash
 from datetime import timedelta
 from flask_cors import CORS 
 import os
@@ -31,19 +30,8 @@ jwt = JWTManager(app)
 CORS(app) 
 
 
-# # route to get all transactions
-# @app.route('/transactions', methods=['GET'])
-# def get_transactions():
-#     # Query the database to retrieve all transactions
-#     transactions = Transaction.query.all()
-
-#     # Serialize the transactions data into dictionaries
-#     transaction_list = [transaction.to_dict() for transaction in transactions]
-
-#     # Return the JSON response
-#     return jsonify({'transactions': transaction_list}), 200
-
 @app.route('/transactions', methods=['GET'])
+@jwt_required()  
 def get_transactions():
     transactions = Transaction.query.all()
 
@@ -59,6 +47,40 @@ def get_transactions():
 
     return jsonify({'transactions': transaction_list}), 200
 
+# route to get user delatils
+@app.route('/user_details', methods=['GET'])
+@jwt_required()  
+def get_user_details():
+    user_id = get_jwt_identity()
+    
+    user = User.query.get(user_id)
+
+    if user:
+        user_dict = user.to_dict()
+        return jsonify(user_dict), 200
+    else:
+        return jsonify({'error': 'User not found'}), 404
+
+# route to get the account deails
+@app.route('/account_details', methods=['GET'])
+@jwt_required()  
+def get_account_details():
+    user_id = get_jwt_identity()
+    
+    savings_account = Account.query.filter_by(type='Savings', user_id=user_id).first()
+    checking_account = Account.query.filter_by(type='Checking', user_id=user_id).first()
+
+    if savings_account and checking_account:
+        savings_data = savings_account.to_dict(rules=('type', 'balance', 'account_number'))
+        checking_data = checking_account.to_dict(rules=('type', 'balance', 'account_number'))
+        
+        response_data = {
+            'Savings Account': savings_data,
+            'Checking Account': checking_data
+        }
+        return jsonify(response_data), 200
+    else:
+        return jsonify({'error': 'One or both accounts not found'}), 404
 
 @app.route('/signup', methods=['POST'])
 def signup():

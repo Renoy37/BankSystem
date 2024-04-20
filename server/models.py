@@ -40,6 +40,11 @@ class User(db.Model, SerializerMixin):
     
     # Many-to-many relationship with Admin (roles)
     roles = db.relationship('Admin', secondary=user_roles, backref='users', lazy=True)
+    
+    # Serialization rules
+    # serialize_rules = ('-accounts.user', '-transactions.user', '-roles.users',)
+    serialize_only = ('name', 'address', 'phone_number', 'email', 'date_of_birth', 'gender', 'nationality')
+
 
     @hybrid_property
     def password_hash(self):
@@ -55,6 +60,7 @@ class User(db.Model, SerializerMixin):
     @staticmethod
     def simple_hash(input):
         return sum(bytearray(input, encoding='utf-8'))
+    
 
 
 class Admin(db.Model, SerializerMixin):
@@ -88,3 +94,5 @@ class Account(db.Model, SerializerMixin):
     balance = db.Column(db.Float)
     account_number = db.Column(db.String(20))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Many accounts belong to one user
+    serialize_rules = ('type', 'balance', 'account_number')
+
