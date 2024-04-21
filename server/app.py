@@ -1,25 +1,22 @@
 #!/usr/bin/env python3
 import os
-import sys  # Import sys module
+import sys
 from flask import Flask, request, make_response, session, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required, get_jwt_identity, JWTManager, current_user
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, current_user
 from models import db, User,  Admin, Account, Transaction, generate_password_hash, check_password_hash
-from datetime import timedelta
-from datetime import datetime
-from flask_cors import CORS 
-from flask_cors import cross_origin
+from datetime import timedelta, datetime
+from flask_cors import CORS, cross_origin
 
-# Append directory containing dotenv module to Python path
-sys.path.append("/home/robins/.local/share/virtualenvs/Phase4_Project-TBnUfy37/lib/python3.10/site-packages")
-
-from dotenv import load_dotenv 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()  # Attempt to load environment variables from .env file
+except ImportError:
+    pass
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-DATABASE = os.environ.get(
-    "DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
+DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
 
 app = Flask(
     __name__,
@@ -28,9 +25,7 @@ app = Flask(
     template_folder='../client/bankingsystem/build/'
 )
 
-load_dotenv()  
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI', DATABASE)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'ne5by5vrhg5v7u7r' 
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(hours=2) 
@@ -42,8 +37,6 @@ migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
 CORS(app)
-
-
 
 
 
