@@ -6,6 +6,10 @@ function Transactions({ accessToken }) {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
+    fetchTransactionDetails();
+  }, [accessToken]);
+
+  const fetchTransactionDetails = () => {
     fetch('http://127.0.0.1:5000/transaction_details', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -22,8 +26,31 @@ function Transactions({ accessToken }) {
       .catch((error) => {
         console.error("Error fetching transaction data:", error);
       });
-  }, [accessToken]);
+  };
   
+  const handleDelete = (transactionId) => {
+    fetch(`http://127.0.0.1:5000/transaction/${transactionId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          setTransactions(prevTransactions =>
+            prevTransactions.filter(transaction => transaction.id !== transactionId)
+          );
+        } else {
+          console.error('Failed to delete transaction:', res.statusText);
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting transaction:", error);
+      });
+  };
+  
+  
+
   return (
     <>
       <Navbar />
@@ -35,6 +62,7 @@ function Transactions({ accessToken }) {
               <th>Description</th>
               <th>Amount</th>
               <th>Date</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -43,6 +71,9 @@ function Transactions({ accessToken }) {
                 <td>{transaction.description}</td>
                 <td>{transaction.amount}</td>
                 <td>{transaction.date}</td>
+                <td>
+                  <button onClick={() => handleDelete(transaction.id)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>

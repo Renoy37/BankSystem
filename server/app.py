@@ -9,6 +9,7 @@ from models import db, User,  Admin, Account, Transaction, generate_password_has
 from datetime import timedelta
 from datetime import datetime
 from flask_cors import CORS 
+from flask_cors import cross_origin
 import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -19,7 +20,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'ne5by5vrhg5v7u7r' 
-app.config['JWT_EXPIRATION_DELTA'] = timedelta(hours=1) 
+app.config['JWT_EXPIRATION_DELTA'] = timedelta(hours=2) 
 app.json.compact = False
 
 
@@ -53,7 +54,8 @@ def get_transaction_details():
     user_transactions = Transaction.query.filter_by(user_id=user_id).all()
 
     transactions_data = [
-        {
+        {   
+            'id' : transaction.id,
             'description': transaction.description,
             'amount': transaction.amount,
             'date': transaction.date.strftime('%Y-%m-%d %H:%M:%S')  # Format date as string
@@ -66,6 +68,7 @@ def get_transaction_details():
 # route to delete transactions
 @app.route('/transaction/<int:transaction_id>', methods=['DELETE'])
 @jwt_required()
+@cross_origin() 
 def delete_transaction(transaction_id):
     user_id = get_jwt_identity()
 
@@ -106,7 +109,6 @@ def edit_user_details():
     user = User.query.get(user_id)
 
     if user:
-        # Update user details based on the data received in the request
         if 'name' in data:
             user.name = data['name']
         if 'address' in data:
