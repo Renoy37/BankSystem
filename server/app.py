@@ -9,11 +9,15 @@ from models import db, User,  Admin, Account, Transaction, generate_password_has
 from datetime import timedelta, datetime
 from flask_cors import CORS, cross_origin
 
-try:
-    from dotenv import load_dotenv
-    load_dotenv()  # Attempt to load environment variables from .env file
-except ImportError:
-    pass
+
+from dotenv import load_dotenv
+load_dotenv()  
+
+# try:
+#     from dotenv import load_dotenv
+#     load_dotenv()  
+# except ImportError:
+#     pass
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
