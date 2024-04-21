@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 from flask import Flask, request, make_response, session, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
@@ -22,7 +23,7 @@ app = Flask(
     template_folder='../client/bankingsystem/build/'
 )
 
-import os
+
 
 from dotenv import load_dotenv
 load_dotenv()
