@@ -10,8 +10,11 @@ from datetime import timedelta
 from datetime import datetime
 from flask_cors import CORS 
 from flask_cors import cross_origin
+from dotenv import load_dotenv
 import os
 
+
+load_dotenv()
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
     "DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
