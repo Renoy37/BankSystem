@@ -10,10 +10,9 @@ from datetime import timedelta
 from datetime import datetime
 from flask_cors import CORS 
 from flask_cors import cross_origin
-from dotenv import load_dotenv
 import os
 
-
+from dotenv import load_dotenv
 load_dotenv()
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
@@ -25,7 +24,8 @@ app = Flask(
     static_folder='../client/bankingsystem/build',
     template_folder='../client/bankingsystem/build/'
     )
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
+# app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'ne5by5vrhg5v7u7r' 
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(hours=2) 
