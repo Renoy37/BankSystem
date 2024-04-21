@@ -58,4 +58,6 @@ migrations
 instance
 
 .vscode
+
 .env
+server/__pycache__
