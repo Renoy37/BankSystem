@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import sys  # Import sys module
 from flask import Flask, request, make_response, session, jsonify
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
@@ -11,7 +12,10 @@ from datetime import datetime
 from flask_cors import CORS 
 from flask_cors import cross_origin
 
-from dotenv import load_dotenv  
+# Append directory containing dotenv module to Python path
+sys.path.append("/home/robins/.local/share/virtualenvs/Phase4_Project-TBnUfy37/lib/python3.10/site-packages")
+
+from dotenv import load_dotenv 
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
@@ -37,7 +41,7 @@ migrate = Migrate(app, db)
 
 jwt = JWTManager(app)
 
-CORS(app) 
+CORS(app)
 
 
 
