@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import os
 from flask import Flask, request, make_response, session, jsonify
 from flask_migrate import Migrate
@@ -12,6 +11,8 @@ from datetime import datetime
 from flask_cors import CORS 
 from flask_cors import cross_origin
 
+from dotenv import load_dotenv  
+
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
     "DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
@@ -23,18 +24,13 @@ app = Flask(
     template_folder='../client/bankingsystem/build/'
 )
 
+load_dotenv()  
 
-
-from dotenv import load_dotenv
-load_dotenv()
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'ne5by5vrhg5v7u7r' 
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(hours=2) 
 app.json.compact = False
-
 
 db.init_app(app)
 migrate = Migrate(app, db)
