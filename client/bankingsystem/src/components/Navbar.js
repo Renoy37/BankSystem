@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
-    // console.log("signed out sucessfully");
     window.location.href = '/'; 
   };
 
