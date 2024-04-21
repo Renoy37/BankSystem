@@ -10,10 +10,7 @@ from datetime import timedelta
 from datetime import datetime
 from flask_cors import CORS 
 from flask_cors import cross_origin
-import os
 
-from dotenv import load_dotenv
-load_dotenv()
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
     "DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
@@ -23,7 +20,13 @@ app = Flask(
     static_url_path='',
     static_folder='../client/bankingsystem/build',
     template_folder='../client/bankingsystem/build/'
-    )
+)
+
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
+
 # app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
