@@ -233,9 +233,9 @@ def login():
 
 
 
-@app.route('/')
-def index():
-    return '<h1>Banking System</h1>'
+# @app.route('/')
+# def index():
+#     return '<h1>Banking System</h1>'
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
