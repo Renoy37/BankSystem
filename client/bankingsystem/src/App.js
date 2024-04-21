@@ -1,12 +1,10 @@
 import './App.css';
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; 
-import Navbar from './components/Navbar';
 import Signup from './components/Login/Signup';
 import Menu from './components/Menu';
 import Transactions from './components/Transactions';
 import Details from './components/Details.js';
-import Footer from './components/Footer';
 
 function App() {
 
