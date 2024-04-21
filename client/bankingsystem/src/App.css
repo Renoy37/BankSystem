@@ -260,6 +260,31 @@
   margin-bottom: 5px;
 }
 
+.details_edit {
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ddd;
+}
+.details_edit:hover {
+  background-color: #ccc;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"] {
+  padding: 17px;
+  border-radius: 10px;
+  border: #000 1px solid;
+}
+
+.save-button {
+  padding: 10px;
+}
+
+.form-label {
+  margin: 10px;
+}
 
 /*  */
 

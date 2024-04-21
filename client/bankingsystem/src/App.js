@@ -5,85 +5,40 @@ import Navbar from './components/Navbar';
 import Signup from './components/Login/Signup';
 import Menu from './components/Menu';
 import Transactions from './components/Transactions';
-import Details from './components/Details';
+import Details from './components/Details.js';
 import Footer from './components/Footer';
 
 function App() {
-  const [signupData, setSignupData] = useState([]);
-  const [loginData, setLoginData] = useState([]);
-  const [authenticated, setAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const storedAuth = localStorage.getItem('authenticated');
-    if (storedAuth === 'true') {
-      setAuthenticated(true);
-    }
-  }, []);
+  // const [accessToken, setAccessToken] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'))
 
-  function handleLogin(loginDetails) {
-    fetch('http://127.0.0.1:5555/login', { 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(loginDetails),
-    })
 
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Login failed');
-        }
-        return response.json();
-      })
+  const handleSignUp = (accessToken) => {
+    console.log('Signed up successfully. Access token:', accessToken);
+    setAccessToken(accessToken);
+    localStorage.setItem('accessToken', accessToken);
+    setIsAuthenticated(true);
 
-      .then((data) => {
-        console.log('Login Successful:', data);
-        const { access_token } = data;
-        localStorage.setItem('access_token', access_token);
-        setAuthenticated(true);
-      })
-      .catch((error) => console.error('Error:', error));
-  }
+  };
+
+  const handleLogin = (accessToken) => {
+    console.log('Logged in successfully. Access token:', accessToken);
+    setAccessToken(accessToken);
+    localStorage.setItem('accessToken', accessToken);
+    setIsAuthenticated(true);
+  };
   
-
-  function handleSignUp(signUpDetails) {
-    fetch('http://127.0.0.1:5555/signup', { 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(signUpDetails),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Signup Successful:', data); 
-        setSignupData([...signupData, signUpDetails]);
-      })
-      .catch((error) => console.error('Error:', error));
-      setAuthenticated(true);
-      localStorage.setItem('authenticated', 'true');
-
-  }
-
-  // function handleLogout () {
-  //   setAuthenticated(false);
-  //   localStorage.removeItem('authenticated');
-  // }
-
+  
   return (
     <Router>
-      <div className="App">
-        {authenticated && <Navbar />}
-        <Routes>
-          {/* If the user is not authenticated, render the signup component */}
-          {!authenticated && <Route path="/" element={<Signup onSignUp={handleSignUp} onLogin={handleLogin} />} />}
-          {/* If the user is authenticated, render the rest of the pages */}
-          <Route path="/menu" element={authenticated ? <Menu /> : <Navigate to="/" />} />
-          <Route path="/transactions" element={authenticated ? <Transactions /> : <Navigate to="/" />} />
-          <Route path="/details" element={authenticated ? <Details /> : <Navigate to="/" />} />
-        </Routes>
-        {authenticated && <Footer />}
-      </div>
+      <Routes>
+        <Route path="/" element={isAuthenticated ? <Navigate to="/menu" /> : <Signup onLogin={handleLogin} onSignUp={handleSignUp} />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/transactions" element={<Transactions accessToken={accessToken}/>} />
+        <Route path="/details" element={<Details accessToken={accessToken}/>} />
+      </Routes>
     </Router>
 
   );

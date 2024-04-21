@@ -7,6 +7,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity, JWTManager, current_user
 from models import db, User,  Admin, Account, Transaction, generate_password_hash, check_password_hash
 from datetime import timedelta
+from datetime import datetime
 from flask_cors import CORS 
 import os
 
@@ -33,6 +34,17 @@ CORS(app)
 
 
 
+# @app.route('/transaction_details', methods=['GET'])
+# @jwt_required()
+# def get_transaction_details():
+#     user_id = get_jwt_identity()
+
+#     user_transactions = Transaction.query.filter_by(user_id=user_id).all()
+
+#     transactions_data = [transaction.to_dict() for transaction in user_transactions]
+
+#     return jsonify({'transactions': transactions_data}), 200
+
 @app.route('/transaction_details', methods=['GET'])
 @jwt_required()
 def get_transaction_details():
@@ -40,10 +52,16 @@ def get_transaction_details():
 
     user_transactions = Transaction.query.filter_by(user_id=user_id).all()
 
-    transactions_data = [transaction.to_dict() for transaction in user_transactions]
+    transactions_data = [
+        {
+            'description': transaction.description,
+            'amount': transaction.amount,
+            'date': transaction.date.strftime('%Y-%m-%d %H:%M:%S')  # Format date as string
+        }
+        for transaction in user_transactions
+    ]
 
     return jsonify({'transactions': transactions_data}), 200
-
 
 # route to delete transactions
 @app.route('/transaction/<int:transaction_id>', methods=['DELETE'])
@@ -77,6 +95,37 @@ def get_user_details():
     else:
         return jsonify({'error': 'User not found'}), 404
     
+    
+# route to edit and update the user details
+@app.route('/edit_user', methods=['PUT'])
+@jwt_required()
+def edit_user_details():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+
+    user = User.query.get(user_id)
+
+    if user:
+        # Update user details based on the data received in the request
+        if 'name' in data:
+            user.name = data['name']
+        if 'address' in data:
+            user.address = data['address']
+        if 'phone_number' in data:
+            user.phone_number = data['phone_number']
+        if 'date_of_birth' in data:
+            user.date_of_birth = datetime.strptime(data['date_of_birth'], '%Y-%m-%d')
+        if 'gender' in data:
+            user.gender = data['gender']
+        if 'nationality' in data:
+            user.nationality = data['nationality']
+
+        db.session.commit()
+
+        return jsonify({'message': 'User details updated successfully'}), 200
+    else:
+        return jsonify({'error': 'User not found'}), 404
+
 
 # route to get the account deails
 @app.route('/account_details', methods=['GET'])
@@ -104,6 +153,28 @@ def get_account_details():
         return jsonify({'error': 'User not found'}), 404
  
 
+# @app.route('/signup', methods=['POST'])
+# def signup():
+#     data = request.get_json()
+#     email = data.get('email')
+#     password = data.get('password')
+
+#     if not email or not password:
+#         return jsonify({'error': 'Email and password are required'}), 400
+
+#     existing_user = User.query.filter_by(email=email).first()
+#     if existing_user:
+#         return jsonify({'error': 'Email already exists'}), 400
+
+#     password_hash = generate_password_hash(password)
+
+#     new_user = User(email=email, password=password_hash)
+
+#     db.session.add(new_user)
+#     db.session.commit()
+
+#     return jsonify({'message': 'User created successfully'}), 201
+
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -124,8 +195,10 @@ def signup():
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({'message': 'User created successfully'}), 201
+    # Generate access token for the newly created user
+    access_token = create_access_token(identity=new_user.id)
 
+    return jsonify({'message': 'User created successfully', 'access_token': access_token}), 201
 
 
 
