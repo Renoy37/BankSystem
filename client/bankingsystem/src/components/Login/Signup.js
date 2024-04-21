@@ -65,7 +65,7 @@ function Signup({ onLogin, onSignUp }) {
 
   return (
     <div className="signup-container">
-      <h3>Banking System</h3>
+      <h3>Coin Sage</h3>
       {error && <p className="error">{error}</p>}
       <form className="signup-form" onSubmit={isSigningUp ? handleSignupSubmit : handleLoginSubmit}>
         <div className="form-group">

@@ -16,7 +16,7 @@ function App() {
 
 
   const handleSignUp = (accessToken) => {
-    console.log('Signed up successfully. Access token:', accessToken);
+    // console.log('Signed up successfully. Access token:');
     setAccessToken(accessToken);
     localStorage.setItem('accessToken', accessToken);
     setIsAuthenticated(true);
@@ -24,11 +24,13 @@ function App() {
   };
 
   const handleLogin = (accessToken) => {
-    console.log('Logged in successfully. Access token:', accessToken);
+    // console.log('Logged in successfully. Access token:');
     setAccessToken(accessToken);
     localStorage.setItem('accessToken', accessToken);
     setIsAuthenticated(true);
   };
+
+  
   
   
   return (

@@ -2,6 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    // console.log("signed out sucessfully");
+    window.location.href = '/'; 
+  };
+
   return (
     <nav className="navbar">
       <ul className="navbar-nav">
@@ -20,6 +26,11 @@ function Navbar() {
             Details
           </Link>
         </li>
+
+      
+        <span onClick={handleLogout} className='logout-click' >logout</span>
+     
+
       </ul>
     </nav>
   );

@@ -72,7 +72,7 @@ function Transactions({ accessToken }) {
                 <td>{transaction.amount}</td>
                 <td>{transaction.date}</td>
                 <td>
-                  <button onClick={() => handleDelete(transaction.id)}>Delete</button>
+                  <button onClick={() => handleDelete(transaction.id)} className='delete-transaction-btn' >Delete</button>
                 </td>
               </tr>
             ))}

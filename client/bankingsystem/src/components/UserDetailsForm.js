@@ -14,7 +14,7 @@ function UserDetailsForm({ userDetails, onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="details-grid">
+    <form onSubmit={handleSubmit} className="user-details-form">
       <label htmlFor="name" className="form-label">Name:</label>
       <input type="text" name="name" value={updatedDetails.name} onChange={handleChange} className="form-input" />
 

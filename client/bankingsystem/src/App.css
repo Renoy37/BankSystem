@@ -165,7 +165,7 @@
 
 .transactions-container {
   margin: 20px;
-  height: 85vh;
+  height: 70vh;
 }
 
 .transaction-list {
@@ -192,6 +192,14 @@
   background-color: #ddd;
 }
 
+.delete-transaction-btn {
+  background-color: red;
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+}
+
+
 
 
 /* Details page styles */
@@ -201,7 +209,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-  height: 85vh;
+  height: 100vh;
 }
 
 .user-details {
@@ -279,12 +287,19 @@ input[type="date"] {
 }
 
 .save-button {
+  margin: 10px;
   padding: 10px;
 }
 
 .form-label {
   margin: 10px;
 }
+
+.user-details-form {
+  display: flex;
+  flex-direction: column;
+}
+
 
 /*  */
 
@@ -295,6 +310,7 @@ label {
 .navbar {
   background-color: #333;
   padding: 30px;
+  display: flex;
 }
 
 .navbar-nav {
@@ -319,6 +335,16 @@ label {
   color: blue; 
 }
 
+.logout-click {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.logout-click:hover {
+  text-decoration: underline;
+}
+
+
 
 /* Footer styes */
 .footerStyle {
@@ -340,8 +366,9 @@ label {
 .footer-content {
   display: flex;
   justify-content: space-around;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
+  background-color: #e0e0e0;
 }
 
 .footer-column {
