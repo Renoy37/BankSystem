@@ -13,11 +13,6 @@ from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
 load_dotenv()  
 
-# try:
-#     from dotenv import load_dotenv
-#     load_dotenv()  
-# except ImportError:
-#     pass
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
