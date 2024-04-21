@@ -6,28 +6,28 @@ function Transactions({ accessToken }) {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
+    const fetchTransactionDetails = () => {
+      fetch('http://127.0.0.1:5000/transaction_details', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.transactions) {
+            setTransactions(data.transactions);
+          } else {
+            console.error("No transactions data found:", data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching transaction data:", error);
+        });
+    };
+
     fetchTransactionDetails();
   }, [accessToken]);
 
-  const fetchTransactionDetails = () => {
-    fetch('http://127.0.0.1:5000/transaction_details', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.transactions) {
-          setTransactions(data.transactions);
-        } else {
-          console.error("No transactions data found:", data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching transaction data:", error);
-      });
-  };
-  
   const handleDelete = (transactionId) => {
     fetch(`http://127.0.0.1:5000/transaction/${transactionId}`, {
       method: 'DELETE',
@@ -48,8 +48,6 @@ function Transactions({ accessToken }) {
         console.error("Error deleting transaction:", error);
       });
   };
-  
-  
 
   return (
     <>
