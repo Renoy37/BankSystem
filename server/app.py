@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 import sys
-from flask import Flask, request, make_response, session, jsonify, render_template
+from flask import Flask, request, make_response, session, jsonify, render_template, send_from_directory
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, current_user
@@ -38,9 +38,20 @@ jwt = JWTManager(app)
 CORS(app)
 
 
-@app.errorhandler(404)
-def not_found(e):
-    return render_template("index.html")
+
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(f"./client/bankingsystem/build/{path}"):
+        return send_from_directory('../client/bankingsystem/build', path)
+    else:
+        return send_from_directory('../client/bankingsystem/build', 'index.html')
+
+
+# @app.errorhandler(404)
+# def not_found(e):
+#     return render_template("index.html")
 
 
 # @app.route('/transaction_details', methods=['GET'])
