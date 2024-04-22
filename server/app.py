@@ -43,11 +43,10 @@ CORS(app)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    if path != "" and os.path.exists(f"./client/bankingsystem/build/{path}"):
-        return send_from_directory('../client/bankingsystem/build', path)
+    if path != "" and os.path.exists(f"../client/bankingsystem/build//{path}"):
+        return send_from_directory('../client/bankingsystem/build/', path)
     else:
-        return send_from_directory('../client/bankingsystem/build', 'index.html')
-
+        return send_from_directory('../client/bankingsystem/build/', 'index.html')
 
 # @app.errorhandler(404)
 # def not_found(e):
