@@ -24,7 +24,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     address = db.Column(db.String(255))
-    phone_number = db.Column(db.String(15))
+    phone_number = db.Column(db.String(30))
     date_of_birth = db.Column(db.Date)
     gender = db.Column(db.String(10))
     nationality = db.Column(db.String(50))
@@ -92,7 +92,7 @@ class Account(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(20))
     balance = db.Column(db.Float)
-    account_number = db.Column(db.String(20))
+    account_number = db.Column(db.String(40))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  # Many accounts belong to one user
     serialize_rules = ('type', 'balance', 'account_number')
 

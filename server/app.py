@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 import sys
-from flask import Flask, request, make_response, session, jsonify
+from flask import Flask, request, make_response, session, jsonify, render_template
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager, current_user
@@ -23,7 +23,7 @@ app = Flask(
     static_folder='../client/bankingsystem/build',
     template_folder='../client/bankingsystem/build/'
 )
-
+# app.config['SQLALCHEMY_DATABASE_URI'] = (DATABASE)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI', DATABASE)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'ne5by5vrhg5v7u7r' 
@@ -37,6 +37,10 @@ jwt = JWTManager(app)
 
 CORS(app)
 
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html")
 
 
 # @app.route('/transaction_details', methods=['GET'])
