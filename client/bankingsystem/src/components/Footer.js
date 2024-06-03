@@ -23,6 +23,7 @@ function Footer() {
           <p>Phone: 123-456-7890</p>
           <p>Address: 123 Main Street, City, Country</p>
         </div>
+        
       </div>
       <div className="footer-bottom">
         <p>&copy; 2024 Coin Sage. All rights reserved.</p>

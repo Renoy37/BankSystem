@@ -1,55 +1,10 @@
-.signup-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+:root {
+  --background-nav : #0086b3;
+}
+body {
+  font-family: 'Roboto', sans-serif;
 }
 
-.signup-form .form-group {
-  margin-bottom: 15px;
-}
-
-.signup-form label {
-  font-weight: bold;
-}
-
-.signup-form input[type="text"],
-.signup-form input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.switch-auth {
-  margin-top: 10px;
-}
-
-.switch-auth button {
-  background: none;
-  border: none;
-  color: blue;
-  cursor: pointer;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: blue;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-  background-color: darkblue;
-}
 
 /* menu component styles */
 
@@ -81,8 +36,9 @@
 
 .menu-list {
   list-style-type: none;
-  padding: 0;
-  margin:  0px 40px;
+  margin:  10px 50px ;
+  /* padding-top: 30px; */
+  color: #0086b3;
 }
 
 .menu-item {
@@ -124,12 +80,28 @@
   text-decoration: none;
 }
 
+.bank_img {
+  width: 90%;
+  height: 90%;
+  border-radius: 20px;
+}
+
+.home-img-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 70px 50px 50px 50px;
+}
+
+.home-img-detals {
+  margin-top: 20px;
+  font-size: larger;
+}
 
 /* menu cards */
 .card-container {
   margin-top: 50px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(2, 1fr); 
   gap: 20px; 
   margin: 50px 50px;
 }
@@ -199,6 +171,11 @@
   border-radius: 5px;
 }
 
+.details-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 30px;
+}
 
 
 
@@ -307,10 +284,13 @@ label {
   margin-right: 10px;
 }
 
+/* Navbar styles */
+
 .navbar {
-  background-color: #333;
+  background-color: var(--background-nav);
   padding: 30px;
   display: flex;
+  width: 100%;
 }
 
 .navbar-nav {
@@ -325,7 +305,7 @@ label {
 }
 
 .nav-link {
-  color: #fff;
+  color: #000;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
@@ -336,7 +316,6 @@ label {
 }
 
 .logout-click {
-  color: #ccc;
   cursor: pointer;
 }
 
@@ -349,6 +328,8 @@ label {
 /* Footer styes */
 .footerStyle {
   margin-top: 120px;
+  cursor: default;
+  width: 100%;
 }
 
 .footer {
@@ -359,16 +340,14 @@ label {
   position: fixed;
   bottom: 0;
   /* bottom: -31px; */
-  width: 100%;
-  cursor: default;
 }
 
 .footer-content {
   display: flex;
   justify-content: space-around;
-  /* max-width: 1200px; */
   margin: 0 auto;
-  background-color: #e0e0e0;
+  background-color: var(--background-nav);
+  width: 100%;
 }
 
 .footer-column {
@@ -391,7 +370,7 @@ label {
 }
 
 .footer-bottom {
-  background-color: #333;
+  background-color: var(--background-nav);
   color: #fff;
   padding: 20px 0;
   text-align: center;
@@ -424,4 +403,22 @@ label {
   .signup-container {
     max-width: 100%;
   }
+  .footer-content {
+    display: block;
+    padding: 10px;
+    padding: 50px 50px;
+  }
 }
+
+
+
+@media only screen and (min-width: 1000px) {
+  .home-img-container {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+  .details-container {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+

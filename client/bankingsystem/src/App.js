@@ -1,10 +1,10 @@
 import './App.css';
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; 
-import Signup from './components/Login/Signup';
 import Menu from './components/Menu';
 import Transactions from './components/Transactions';
 import Details from './components/Details.js';
+import SignInSide from './components/SignInSide.js';
 
 function App() {
 
@@ -34,7 +34,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={isAuthenticated ? <Navigate to="/menu" /> : <Signup onLogin={handleLogin} onSignUp={handleSignUp} />} />
+        <Route path="/" element={isAuthenticated ? <Navigate to="/menu" /> : <SignInSide onLogin={handleLogin} onSignUp={handleSignUp}  />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/transactions" element={<Transactions accessToken={accessToken}/>} />
         <Route path="/details" element={<Details accessToken={accessToken}/>} />

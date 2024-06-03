@@ -1,2 +1,5 @@
 web: PORT=4000 npm start --prefix client/bankingsystem
 api: gunicorn -b 127.0.0.1:5000 --chdir server app:app
+
+
+pip install -r requirements.txt && npm install --prefix client/bankingsystem && npm run build --prefix client/bankingsystem  
