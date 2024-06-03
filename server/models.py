@@ -28,7 +28,7 @@ class User(db.Model, SerializerMixin):
     date_of_birth = db.Column(db.Date)
     gender = db.Column(db.String(10))
     nationality = db.Column(db.String(50))
-    password = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     _password_hash = db.Column(db.String(), nullable=False, default='')
 
@@ -57,9 +57,14 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return self.simple_hash(password) == self.password_hash
 
+    # @staticmethod
+    # def simple_hash(input):
+    #     return sum(bytearray(input, encoding='utf-8'))
+    
     @staticmethod
-    def simple_hash(input):
-        return sum(bytearray(input, encoding='utf-8'))
+    def simple_hash(password):
+        return generate_password_hash(password)
+
     
 
 
@@ -68,7 +73,7 @@ class Admin(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     name = db.Column(db.String(100))
     role = db.Column(db.String(50))
