@@ -11,7 +11,7 @@ function Signup({ onLogin, onSignUp }) {
 
   function handleSignupSubmit(e) {
     e.preventDefault();
-    fetch('http://127.0.0.1:5000/signup', {
+    fetch('https://banksystem-26.onrender.com/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ function Signup({ onLogin, onSignUp }) {
 
   function handleLoginSubmit(e) {
     e.preventDefault();
-    fetch('http://127.0.0.1:8000/login', {
+    fetch('https://banksystem-26.onrender.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
