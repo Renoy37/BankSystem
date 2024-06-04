@@ -32,3 +32,5 @@ This is a simple web application for managing user accounts, transactions, and u
 - Navigate through the menu to access different features like transactions, user details, transactions, etc.
 - Log out of the application when done.
 
+
+'Troubleshooting something'
