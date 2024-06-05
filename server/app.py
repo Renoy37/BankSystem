@@ -37,7 +37,7 @@ migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
 # CORS(app)
-CORS(app, resources={r"/*": {"origins": "https://main--coinsagebanking.netlify.app"}})
+CORS(app, resources={r"/*": {"origins": "https://coinsagebanking.netlify.app"}})
 
 
 
