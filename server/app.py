@@ -12,8 +12,8 @@ from dotenv import load_dotenv
 load_dotenv()  
 
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
+# BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+# DATABASE = os.environ.get("DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
 
 app = Flask(__name__)
 
@@ -23,8 +23,8 @@ app = Flask(
     static_folder='../client/bankingsystem/build',
     template_folder='../client/bankingsystem/build/'
 )
-app.config['SQLALCHEMY_DATABASE_URI'] = (DATABASE)
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
+# app.config['SQLALCHEMY_DATABASE_URI'] = (DATABASE)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'ne5by5vrhg5v7u7r' 
 app.config['JWT_EXPIRATION_DELTA'] = timedelta(hours=2) 
@@ -41,38 +41,17 @@ CORS(app)
 
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if path != "" and os.path.exists(f"../client/bankingsystem/build//{path}"):
-        return send_from_directory('../client/bankingsystem/build/', path)
-    else:
-        return send_from_directory('../client/bankingsystem/build/', 'index.html')
+# @app.route('/', defaults={'path': ''})
+# @app.route('/<path:path>')
+# def serve(path):
+#     if path != "" and os.path.exists(f"../client/bankingsystem/build//{path}"):
+#         return send_from_directory('../client/bankingsystem/build/', path)
+#     else:
+#         return send_from_directory('../client/bankingsystem/build/', 'index.html')
 
 # @app.errorhandler(404)
 # def not_found(e):
 #     return render_template("index.html")
-
-
-
-# route to delete transactions
-# @app.route('/transaction/<int:transaction_id>', methods=['DELETE'])
-# @jwt_required()
-# def delete_transaction(transaction_id):
-#     user_id = get_jwt_identity()
-
-#     transaction = Transaction.query.filter_by(id=transaction_id, user_id=user_id).first()
-
-#     if not transaction:
-#         return jsonify({'error': 'Transaction not found or does not belong to the user'}), 404
-
-#     db.session.delete(transaction)
-#     db.session.commit()
-
-#     return jsonify({'message': 'Transaction deleted successfully'}), 200
-
-
-
 
 
 @app.route('/api/user/details', methods=['GET'])
