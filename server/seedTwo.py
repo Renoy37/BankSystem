@@ -23,7 +23,7 @@ def seed_data():
         # Seed users
         users = []
         for i in range(1, 51):
-            email = f'john{i}@gmail.com.com'  # Generate unique email for each user
+            email = f'john{i}@gmail.com'  # Generate unique email for each user
             user = User(
                 name=f'User {i}',
                 address=f'{i} Main St',
@@ -43,10 +43,12 @@ def seed_data():
         # Seed transactions for each user
         for user in users:
             for j in range(1, 51):  # Each user has at least 50 transactions
+                category = 'Rent' if j % 3 == 0 else 'Groceries' if j % 2 == 0 else 'Entertainment'
                 transaction = Transaction(
                     amount=1000.0 + j * 10,
                     description=f'Transaction {j} for User {user.id}',
                     date=datetime.now(),
+                    category=category,  # Assign category based on j value
                     user_id=user.id
                 )
                 db.session.add(transaction)
@@ -77,6 +79,7 @@ def seed_data():
 
         db.session.commit()
         print("Database seeding completed.")
+
 
 if __name__ == '__main__':
     seed_data()

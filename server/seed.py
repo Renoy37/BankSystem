@@ -1,7 +1,7 @@
 from faker import Faker
 from app import app, db
-from models import Account, user_roles, User, Admin, Transaction
-from random import randint, choice
+from models import Account, User, Admin, Transaction
+from random import randint
 
 fake = Faker()
 
@@ -19,7 +19,6 @@ def seed_users():
         print("Creating users...")
         default_password = 'password'  
         for _ in range(20):
-            password_hash = User.simple_hash(default_password)  # Hashing the default password
             user = User(
                 name=fake.name(),
                 address=fake.address(),
@@ -28,35 +27,29 @@ def seed_users():
                 gender=fake.random_element(elements=('Male', 'Female', 'Other')),
                 nationality=fake.country(),
                 email=fake.email(),
-                password=default_password,  # Setting the default password
-                password_hash=password_hash  
+                password=default_password,
+                zip_code=fake.zipcode(),
+                active_status=fake.random_element(elements=('Active', 'Inactive')),
             )
             db.session.add(user)
         db.session.commit()
         print("Users created successfully.")
 
-
-
 def seed_admins():
     with app.app_context():
         print("Creating admins...")
-        default_password = 'adminpassword'  # Default password
+        default_password = 'adminpassword'
         for _ in range(5):
-            # password_hash = Admin.simple_hash(default_password)  # Hash the default password
-            # password_hash = default_password
             admin = Admin(
                 username=fake.user_name(),
                 email=fake.email(),
                 name=fake.name(),
                 role=fake.random_element(elements=('Admin', 'Super Admin')),
-                password=default_password,  # Set the default password
-                # password_hash=password_hash  # Set the hashed password
+                password=default_password,
             )
             db.session.add(admin)
         db.session.commit()
         print("Admins created successfully.")
-
-
 
 def seed_accounts():
     with app.app_context():
@@ -89,27 +82,9 @@ def seed_transactions():
         db.session.commit()
         print("Transactions created successfully.")
 
-# def test_authentication():
-#     with app.app_context():
-#         user = User.query.first()
-#         admin = Admin.query.first()
-
-#         print(f"Testing authentication for user {user.email}...")
-#         if user.authenticate('password'):
-#             print("User authentication successful!")
-#         else:
-#             print("User authentication failed!")
-
-#         print(f"Testing authentication for admin {admin.email}...")
-#         if admin.authenticate('adminpassword'):
-#             print("Admin authentication successful!")
-#         else:
-#             print("Admin authentication failed!")
-
 if __name__ == "__main__":
     clear_db()
     seed_users()
     seed_admins()
     seed_accounts()
     seed_transactions()
-    # test_authentication()
